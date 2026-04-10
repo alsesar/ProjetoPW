@@ -1,65 +1,60 @@
 import React from 'react';
-import { Card } from 'primereact/card';
 import { Avatar } from 'primereact/avatar';
-import profileImage from '../../assets/profile.jpg';
-import 'primeflex/primeflex.css';
 import { Button } from 'primereact/button';
-import Curriculo from '../../assets/Curriculo_Kaya_Haufe.pdf'
+import { Card } from 'primereact/card';
+import Curriculo from '../../assets/Curriculo_Kaya_Haufe.pdf';
+import profileImage from '../../assets/profile.jpg';
 
 export default function Sobre() {
-  const header = <h1 className='mt-0'>Aplicação de Gestão de Empresas Externas e Parceiros</h1>;
   const footer = (
     <div className="flex flex-column align-items-center">
       <Avatar image={profileImage} size="xlarge" shape="circle" />
-      <label className="mt-3">Desenvolvido por Kayã Haufe.</label>
+      <span className="mt-3">Desenvolvido por Kaya Haufe.</span>
 
-      <span className='mt-3'>
-        <Button label="LinkedIn" icon="pi pi-linkedin" className="p-button-outlined linkedin-button mr-3" onClick={() => window.open('https://www.linkedin.com/in/kayahaufe')} />
+      <div className="sobre-footer-actions">
+        <a href="https://www.linkedin.com/in/kayahaufe" target="_blank" rel="noreferrer">
+          <Button label="LinkedIn" icon="pi pi-linkedin" className="linkedin-button" />
+        </a>
 
         <a href={Curriculo} download="Curriculo_Kaya_Haufe.pdf">
-          <Button label="Currículo" icon="pi pi-download" className="p-button-success" />
+          <Button label="Curriculo" icon="pi pi-download" className="p-button-success" />
         </a>
-      </span>
+      </div>
     </div>
   );
 
   return (
     <div className="sobre flex justify-content-center align-items-center">
-      <Card title={header} footer={footer}>
+      <Card
+        title="Aplicacao de Gestao de Empresas Externas e Parceiros"
+        footer={footer}
+      >
         <section>
-          <h2>Visão Geral</h2>
+          <h2>Visao Geral</h2>
           <p>
-            A aplicação de <strong>Gestão de Empresas Externas e Parceiros</strong> é uma solução voltada para o gerenciamento
-            e administração de dados de empresas parceiras e colaboradores. O sistema permite que os usuários realizem o
-            cadastro, edição e exclusão de empresas externas e parceiros, com funcionalidades adicionais como filtragem de dados,
-            paginação e suporte a operações CRUD (Criar, Ler, Atualizar e Deletar).
+            A aplicacao de <strong>Gestao de Empresas Externas e Parceiros</strong> foi criada para
+            organizar o cadastro e a manutencao de empresas externas e parceiros. O sistema oferece
+            listagem, criacao, edicao, exclusao, busca e paginacao em uma interface unica.
           </p>
         </section>
 
         <section>
           <h2>Tecnologias Utilizadas</h2>
           <ul>
-            <li>React para a construção da interface do usuário</li>
-            <li>PrimeReact para componentes ricos e estilização</li>
-            <li>Integração com APIs RESTful para CRUD de dados</li>
-            <li>Login com armazenamento em cookie e local storage</li>
+            <li>React para a construcao da interface do usuario</li>
+            <li>PrimeReact e PrimeFlex para componentes e layout</li>
+            <li>Axios para integracao com APIs REST</li>
+            <li>Vite para desenvolvimento e build da aplicacao</li>
           </ul>
         </section>
 
         <section>
           <h2>Funcionalidades Principais</h2>
           <ul>
-            <li>Cadastro e edição de empresas externas e parceiros</li>
-            <li>Suporte a filtragem e busca global</li>
-            <li>Paginação dinâmica para grandes volumes de dados</li>
-            <li>Feedbacks interativos com Toasts para ações bem-sucedidas</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Observação</h2>
-          <ul>
-            <li>Essa é a primeira vez que codifico em ReactJS. Programei 2 anos em AngularJS e depois fiquei 2 anos na infra (experiência adquirida no Banco Safra), portanto, sei que o código possui melhorias a serem feitas e não está no melhor clean code, mas isso se deve ao fato de nunca ter usado a linguagem e ter que desenvolver essa aplicação em 4 dias.</li>
+            <li>Cadastro e edicao de parceiros</li>
+            <li>Cadastro e edicao de empresas externas</li>
+            <li>Busca global nas listagens</li>
+            <li>Paginacao para grandes volumes de dados</li>
           </ul>
         </section>
       </Card>

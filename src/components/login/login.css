@@ -1,10 +1,29 @@
-/* Garantir que o container da página de login ocupe a tela inteira sem rolagem */
 body.login-page {
     background-image: url("../../assets/bg.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    margin: 0; /* Remove margens do body para evitar espaço em branco */
-    height: 100vh; /* Ocupa a altura total da viewport */
-    overflow: hidden; /* Remove qualquer rolagem */
+    margin: 0;
+    min-height: 100vh;
+}
+
+.login-screen {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.login-card {
+    width: min(100%, 22rem);
+}
+
+.login-form {
+    display: grid;
+    gap: 1rem;
+}
+
+.login-error {
+    color: #b42318;
 }

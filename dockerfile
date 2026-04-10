@@ -1,20 +1,18 @@
-# Use uma imagem base com Node.js
-FROM node:18
+FROM node:20-alpine AS build
 
-# Defina o diretório de trabalho
 WORKDIR /app
 
-# Copie os arquivos package.json e package-lock.json
 COPY package*.json ./
+RUN npm ci
 
-# Instale as dependências com logging detalhado
-RUN npm install --verbose
-
-# Copie o restante dos arquivos do projeto
 COPY . .
+RUN npm run build
 
-# Exponha a porta que o app vai usar
-EXPOSE 5173
+FROM nginx:1.27-alpine
 
-# Comando para rodar o app
-CMD ["npm", "run", "preview"]
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

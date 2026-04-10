@@ -1,51 +1,75 @@
-# Projeto Teddy
+# Teddy
 
-Este projeto é uma aplicação de micro front-ends (facilitando o desenvolvimento individiual de um módulo especifico) para cadastro e gestão de parceiros e empresas externas. A aplicação utiliza React (com PrimeReact) e Angular 15. O projeto é containerizado para facilitar o deploy em ambientes de cloud, como AWS ECS.
+Aplicacao React para cadastro e gestao de parceiros e empresas externas, usando PrimeReact e Vite.
 
-## Tecnologias Utilizadas
+## Stack
 
-- **Frontend:** React, PrimeReact, Angular 15
-- **Containerização:** Docker
-- **JS-Cookie:** Gestão de cookies
-- **Vite:** Build da aplicação
-- **Vercel:** Deploy aplicação
-- **Styled-Components**
+- React 18
+- React Router DOM 6
+- PrimeReact e PrimeFlex
+- Axios
+- Vite 7
+- ESLint 9
+- Docker com Nginx para servir o build de producao
 
-## Estrutura do Projeto
-
-- `src/` - Código-fonte da aplicação.
-- `public/` - Arquivos estáticos e `index.html`.
-
-## TODO / TASKS
-- [ ] Implementar testes unitários (estimado: 3 dias)
-- [ ] Automatizar testes de integração (estimado: 5 dias)
-
-## Configuração do Projeto
-
-### 1. Clonando o Repositório
+## Scripts
 
 ```sh
-git clone https://github.com/kayahaufe/teddy.git
-cd teddy
+npm install
+npm run dev
+npm run lint
+npm run build
 ```
 
-Rode o seguinte comando no diretório do projeto
+## Desenvolvimento local
 
+O servidor de desenvolvimento sobe em:
+
+```txt
+http://localhost:5173
 ```
-npm install && npm run dev
-```
 
-### Configuração do Docker
-
-Certifique-se de estar na raiz do projeto e execute:
+## Build de producao
 
 ```sh
 npm run build
+```
+
+O resultado fica em `dist/`.
+
+## Docker
+
+Build da imagem:
+
+```sh
 docker build -t teddy .
 ```
 
-Rode o container
+Executar localmente:
 
+```sh
+docker run -p 4173:80 teddy
 ```
-docker run -p 5173:5173 teddy
+
+Ou com Compose:
+
+```sh
+docker compose up --build
 ```
+
+Aplicacao disponivel em:
+
+```txt
+http://localhost:4173
+```
+
+## Deploy
+
+O projeto esta configurado como SPA. Em ambientes como Vercel, rotas internas sao redirecionadas para `index.html`.
+
+## Observacoes
+
+- O login atual e uma sessao local simples usando cookie ou localStorage.
+- As listagens consomem APIs mockadas externas.
+- O codigo foi reorganizado para centralizar rotas, sessao, normalizacao de dados e servicos HTTP.
+- Se a API externa falhar, o front usa dados seedados e um CRUD local persistido em `localStorage`, mantendo o site funcional para estudo e demonstracao.

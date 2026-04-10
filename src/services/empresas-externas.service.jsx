@@ -1,27 +1,19 @@
-import http from "../http-common";
+import { API_ENDPOINTS, STORAGE_KEYS } from '../constants/app-config';
+import { fallbackExternalCompanies } from '../mocks/fallback-data';
+import createCrudService from './create-crud-service';
 
-const url = "https://655cf25525b76d9884fe3153.mockapi.io/v1/external-companies";
+const externalCompaniesCrudService = createCrudService({
+  baseUrl: API_ENDPOINTS.externalCompanies,
+  storageKey: STORAGE_KEYS.externalCompaniesStore,
+  seedData: fallbackExternalCompanies,
+});
 
-class EmpresasExternasService {
-  getEmpresasExternas() {
-    return Promise.resolve(http.get(url));
-  }
+const EmpresasExternasService = {
+  getEmpresasExternas: externalCompaniesCrudService.list,
+  getEmpresaExternaById: externalCompaniesCrudService.getById,
+  postEmpresaExterna: externalCompaniesCrudService.create,
+  putEmpresaExterna: externalCompaniesCrudService.update,
+  deleteEmpresaExternaById: externalCompaniesCrudService.remove,
+};
 
-  getEmpresaExternaById(id) {
-    return Promise.resolve(http.get(`${url}/${id}`));
-  }
-
-  postEmpresaExterna(data) {
-    return Promise.resolve(http.post(`${url}`, data));
-  }
-
-  putEmpresaExterna(id, data) {
-    return Promise.resolve(http.put(`${url}/${id}`, data));
-  }
-
-  deleteEmpresaExternaById(id) {
-    return Promise.resolve(http.delete(`${url}/${id}`));
-  }
-}
-
-export default new EmpresasExternasService();
+export default EmpresasExternasService;

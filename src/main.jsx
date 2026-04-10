@@ -1,10 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import AppCrashFallback from './components/common/app-crash-fallback';
+import AppErrorBoundary from './components/common/app-error-boundary';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter>
+      <AppErrorBoundary fallback={AppCrashFallback}>
+        <App />
+      </AppErrorBoundary>
+    </BrowserRouter>
+  </React.StrictMode>
 );

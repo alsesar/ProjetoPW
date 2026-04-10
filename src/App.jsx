@@ -1,95 +1,121 @@
-import React, { useEffect, useState } from 'react';
-import { Routes, Route, useLocation, useNavigate, Link } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import 'primereact/resources/themes/saga-orange/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import Cookies from 'js-cookie';
+import 'primeflex/primeflex.css';
 import { Menubar } from 'primereact/menubar';
-import LogoTeddy from "./assets/logo-teddy.png";
+import LogoTeddy from './assets/logo-teddy.png';
 import './App.css';
+import ProtectedRoute from './components/common/protected-route';
+import { ROUTES } from './constants/app-config';
+import { clearSession, getStoredUsername, hasActiveSession } from './utils/session';
 
-import ListarParceiros from "./components/parceiros/listar-parceiros.component";
-import ListarEmpresasExternas from "./components/empresas-externas/listar-empresas-externas";
-import Sobre from "./components/sobre/sobre";
-import Login from "./components/login/login";
+const Login = lazy(() => import('./components/login/login'));
+const ListarParceiros = lazy(() => import('./components/parceiros/listar-parceiros.component'));
+const ListarEmpresasExternas = lazy(() => import('./components/empresas-externas/listar-empresas-externas'));
+const Sobre = lazy(() => import('./components/sobre/sobre'));
+
+function getGreeting() {
+  const hour = new Date().getHours();
+
+  if (hour < 12) {
+    return 'Bom dia';
+  }
+
+  if (hour < 18) {
+    return 'Boa tarde';
+  }
+
+  return 'Boa noite';
+}
 
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [greeting, setGreeting] = useState('');
-
-  // Função para determinar a saudação
-  function getGreeting() {
-    const now = new Date();
-    const hour = now.getHours();
-
-    if (hour < 12) {
-      return 'Bom dia';
-    } else if (hour < 18) {
-      return 'Boa tarde';
-    } else {
-      return 'Boa noite';
-    }
-  }
-
-  useEffect(() => {
-    // Tenta obter o nome de usuário do cookie
-    const user = Cookies.get('username');
-    user && setUsername(user);
-    setGreeting(getGreeting());
-  }, [navigate]);
+  const isAuthenticated = hasActiveSession();
+  const username = getStoredUsername();
+  const shouldShowMenu = isAuthenticated && location.pathname !== ROUTES.login;
 
   const handleLogout = () => {
-    Cookies.remove('username');
-    localStorage.removeItem('username');
-    setUsername(''); // Limpa o estado do username
-    navigate('/'); // Redireciona para a página de login
+    clearSession();
+    navigate(ROUTES.login, { replace: true });
   };
 
-  const items = [
+  const menuItems = [
     {
       label: 'Parceiros',
-      url: '/ListarParceiros'
+      command: () => navigate(ROUTES.partners),
     },
     {
       label: 'Empresas Externas',
-      url: '/ListarEmpresasExternas'
+      command: () => navigate(ROUTES.externalCompanies),
     },
     {
       label: 'Sobre',
-      url: '/Sobre'
+      command: () => navigate(ROUTES.about),
     },
     {
       label: 'Sair',
-      command: handleLogout // Adiciona a função de logout ao clicar em "Sair"
-    }
+      command: handleLogout,
+    },
   ];
 
   const start = (
-    <Link to="/ListarParceiros">
+    <Link to={ROUTES.partners}>
       <img alt="logo" src={LogoTeddy} height="40" className="mr-2" />
     </Link>
   );
 
   const end = (
     <div className="welcome flex align-items-center gap-2">
-      <span className="mx-2">{username ? `${greeting}, ${username}` : ''}</span>
+      <span className="mx-2">{username ? `${getGreeting()}, ${username}` : ''}</span>
     </div>
   );
 
   return (
-    <div className="card">
-      {location.pathname !== '/' && (
-        <Menubar model={items} start={start} end={end} className="custom-menubar" />
+    <div className="app-shell">
+      {shouldShowMenu && (
+        <Menubar model={menuItems} start={start} end={end} className="custom-menubar" />
       )}
-      <div className="container mt-3">
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/ListarParceiros" element={<ListarParceiros />} />
-          <Route path="/ListarEmpresasExternas" element={<ListarEmpresasExternas />} />
-          <Route path="/Sobre" element={<Sobre />} />
-        </Routes>
+
+      <div className="page-container">
+        <Suspense fallback={<div className="page-loading">Carregando...</div>}>
+          <Routes>
+            <Route
+              path={ROUTES.login}
+              element={isAuthenticated ? <Navigate to={ROUTES.partners} replace /> : <Login />}
+            />
+            <Route
+              path={ROUTES.partners}
+              element={(
+                <ProtectedRoute>
+                  <ListarParceiros />
+                </ProtectedRoute>
+              )}
+            />
+            <Route
+              path={ROUTES.externalCompanies}
+              element={(
+                <ProtectedRoute>
+                  <ListarEmpresasExternas />
+                </ProtectedRoute>
+              )}
+            />
+            <Route
+              path={ROUTES.about}
+              element={(
+                <ProtectedRoute>
+                  <Sobre />
+                </ProtectedRoute>
+              )}
+            />
+            <Route
+              path="*"
+              element={<Navigate to={isAuthenticated ? ROUTES.partners : ROUTES.login} replace />}
+            />
+          </Routes>
+        </Suspense>
       </div>
     </div>
   );
