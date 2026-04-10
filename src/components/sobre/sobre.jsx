@@ -3,7 +3,7 @@ import { Avatar } from 'primereact/avatar';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import Curriculo from '../../assets/Curriculo_Kaya_Haufe.pdf';
-import profileImage from '../../assets/profile.jpg';
+import profileImage from '../../assets/profile.jpeg';
 
 export default function Sobre() {
   const footer = (
