@@ -1,7 +1,7 @@
 body {
     margin: 0;
-    background: #f5f7fb;
-    color: #1f2937;
+    background-image: linear-gradient(to bottom, rgb(1, 15, 80), rgb(0, 40, 219));
+    color: #ffffff;
     font-family: var(--font-family, Arial, sans-serif);
 }
 
@@ -23,7 +23,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #667085;
+    color: #FFC43F;
     font-weight: 600;
 }
 
@@ -59,7 +59,7 @@ a {
 .fatal-state__description {
     margin: 0 0 1.5rem;
     line-height: 1.6;
-    color: #475467;
+    color: #FFC43F;
 }
 
 .fatal-state__actions {
@@ -86,8 +86,8 @@ a {
 
 .custom-menubar,
 .custom-menubar .p-menubar-root-list {
-    background-color: #151515;
-    border-color: #151515;
+    background-color: #00072e;
+    border-color: #00072e;
     border-radius: 0;
 }
 
@@ -98,36 +98,36 @@ a {
 
 .custom-menubar .p-menuitem-link:hover,
 .custom-menubar .p-menuitem-link:focus {
-    background-color: #EB6625;
-    border-color: #EB6625;
+    background-color: #FFC43F;
+    border-color: #FFC43F;
     color: white;
 }
 
 .p-button-success,
 .btn-entrar,
 .btn-orange {
-    background-color: #EB6625;
-    border-color: #EB6625;
+    background-color: #FFC43F;
+    border-color: #FFC43F;
     color: white;
 }
 
 .p-button-success:hover,
 .btn-entrar:hover,
 .btn-orange:hover {
-    background-color: #d95c20;
-    border-color: #d95c20;
+    background-color: #FFC43F;
+    border-color: #FFC43F;
 }
 
 .btn-red-not-bg {
     background-color: transparent;
-    border-color: #d92d20;
-    color: #d92d20;
+    border-color: #FFC43F;
+    color: #FFC43F;
 }
 
 .btn-orange-not-bg {
     background-color: transparent;
-    border-color: #EB6625;
-    color: #EB6625;
+    border-color: #FFC43F;
+    color: #FFC43F;
 }
 
 .linkedin-button {
