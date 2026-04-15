@@ -1,5 +1,4 @@
 body.login-page {
-    background-color: blue;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -16,6 +15,8 @@ body.login-page {
 }
 
 .login-card {
+    color: aliceblue;
+    background: transparent;
     width: min(100%, 22rem);
 }
 
@@ -25,5 +26,5 @@ body.login-page {
 }
 
 .login-error {
-    color: #b42318;
+    color: #FFC43F;
 }
