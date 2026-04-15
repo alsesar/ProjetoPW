@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import { Menubar } from 'primereact/menubar';
-import LogoTeddy from './assets/logo-teddy.png';
+import LogoInsecta from './assets/sem título.gif';
 import './App.css';
 import ProtectedRoute from './components/common/protected-route';
 import { ROUTES } from './constants/app-config';
@@ -52,10 +52,6 @@ function App() {
       command: () => navigate(ROUTES.externalCompanies),
     },
     {
-      label: 'Sobre',
-      command: () => navigate(ROUTES.about),
-    },
-    {
       label: 'Sair',
       command: handleLogout,
     },
@@ -63,7 +59,7 @@ function App() {
 
   const start = (
     <Link to={ROUTES.partners}>
-      <img alt="logo" src={LogoTeddy} height="40" className="mr-2" />
+      <img alt="logo" src={LogoInsecta} height="70" className="mr-2" />
     </Link>
   );
 
